@@ -22,16 +22,22 @@
  */
 
 fn diamond (n: i32) -> Option<String> {
-    if n <= 0 || n % 2 == 0 {
-        return None;
-    }
+    if n <= 0 || n % 2 == 0 { return None; }
 
     let mut result = String::new();
     let n = n as usize;
 
-    // Top half
     for i in (1..=n).step_by(2) {
-        let spaces = (n - 1) / 2;
+        let spaces = (n - i) / 2;
+
+        result.push_str(&" ".repeat(spaces));
+        result.push_str(&"*".repeat(i));
+        result.push('\n');
+    }
+
+    for i in (1..n).step_by(2).rev() {
+        let spaces = (n - i) / 2;
+
         result.push_str(&" ".repeat(spaces));
         result.push_str(&"*".repeat(i));
         result.push('\n');
@@ -40,6 +46,20 @@ fn diamond (n: i32) -> Option<String> {
     Some(result)
 }
 
+fn diamond_simpler(n: i32) -> Option<String> {
+    if n <= 0 || n % 2 == 0 { return None };
+
+    let n = n as usize;
+    let diamond = (1..=n)
+        .chain((1..n).rev())
+        .step_by(2)
+        .map(|i| format!("{}{}\n", " ".repeat((n - i) / 2), "*".repeat(i)))
+        .collect();
+
+    Some(diamond)
+}
+
 fn main() {
     println!("{}", diamond(5).unwrap());
+    println!("{}", diamond_simpler(5).unwrap());
 }
