@@ -11,10 +11,7 @@
  */
 
 fn remove_exclamation_marks(input: &str) -> String {
-    input.to_string()
-        .chars()
-        .filter(|&c| c != '!')
-        .collect()
+    input.chars().filter(|&c| c != '!').collect()
 }
 
 fn main() {
